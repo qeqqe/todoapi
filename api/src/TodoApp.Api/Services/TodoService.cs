@@ -43,8 +43,8 @@ namespace TodoApp.Api.Services
             todo.Title = updateDto.Title;
             todo.Description = updateDto.Description;
 
-            todo.IsCompleted = (!todo.IsCompleted && updateDto.IsCompleted) ? true : false;
-            todo.CompletedAt = (!todo.IsCompleted && updateDto.IsCompleted) ? DateTime.UtcNow : null;
+            todo.IsCompleted = updateDto.IsCompleted;
+            todo.CompletedAt = updateDto.IsCompleted ? DateTime.UtcNow : null;
 
             return todo;
         }
