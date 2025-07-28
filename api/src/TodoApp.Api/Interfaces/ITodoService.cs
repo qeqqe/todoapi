@@ -1,6 +1,6 @@
 using TodoApp.Api.Models;
 
-namespace TodoApp.Api.Services
+namespace TodoApp.Api.Interfaces
 {
     public interface ITodoService
     {

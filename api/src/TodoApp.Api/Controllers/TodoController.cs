@@ -26,7 +26,7 @@ namespace TodoApp.Api.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Todo?>> GetTodo(int id)
+        public async Task<ActionResult<Todo?>> GetTodo([FromRoute] int id)
         {
             var todo = await _todoService.GetTodoByIdAsync(id);
             return Ok(todo);
@@ -54,6 +54,7 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPut("{id}/toggle")]
+        [Consumes("application/json")]
 
         public async Task<ActionResult<Todo?>> ToggleCompletion(int id)
         {
@@ -62,6 +63,11 @@ namespace TodoApp.Api.Controllers
             return Ok(todo);
         }
 
+        [HttpGet("get")]
+        public ActionResult<string> get()
+        {
+            return Ok("hello");
+        }
 
     }
 }
