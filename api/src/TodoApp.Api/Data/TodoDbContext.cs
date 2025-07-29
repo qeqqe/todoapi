@@ -11,6 +11,14 @@ namespace TodoApp.Api.Data
 
         public DbSet<Todo> Todos { get; set; }
 
+        // will do
+
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        //     base.OnConfiguring(optionsBuilder);
+        // }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -48,18 +56,18 @@ namespace TodoApp.Api.Data
 
 
             modelBuilder.Entity<Todo>().HasData(
-                new Todo 
-                { 
-                    Id = 1, 
-                    Title = "Learn EF Core", 
+                new Todo
+                {
+                    Id = 1,
+                    Title = "Learn EF Core",
                     Description = "Master Entity Framework Core with PostgreSQL",
                     IsCompleted = false,
                     CreatedAt = DateTime.UtcNow
                 },
-                new Todo 
-                { 
-                    Id = 2, 
-                    Title = "Build Todo API", 
+                new Todo
+                {
+                    Id = 2,
+                    Title = "Build Todo API",
                     Description = "Create a RESTful API with CRUD operations",
                     IsCompleted = true,
                     CreatedAt = DateTime.UtcNow.AddDays(-1),

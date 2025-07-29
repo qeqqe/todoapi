@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Api.Data;
 using TodoApp.Api.Interfaces;
+using TodoApp.Api.Repositories;
 using TodoApp.Api.Services;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddRateLimiter(_ => _
     .AddFixedWindowLimiter(policyName: "fixed", options =>
@@ -26,29 +28,20 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
         return builtInFactory(context);
     };
 });
-
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<ITodoService, TodoService>();
+builder.Services.AddDbContext<TodoDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddScoped<ITodoService, TodoService>();
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
 builder.WebHost.UseUrls("http://localhost:5000");
 
 // var testApi = builder.Configuration["ApiKey:key"];
-var connectionString = builder.Configuration.GetConnectionString("Database");
-builder.Services.AddDbContext<TodoDbContext>(options => options.UseNpgsql(connectionString));
 
 
 var app = builder.Build();
 
 app.UseRateLimiter();
-
-static string GetTicks() => (DateTime.Now.Ticks & 0x11111).ToString("00000");
-
-app.MapGet("/", () => Results.Ok($"Hello {GetTicks()}"))
-                           .RequireRateLimiting("fixed");
-
-
 
 if (app.Environment.IsDevelopment())
 {

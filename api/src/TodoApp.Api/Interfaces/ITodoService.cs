@@ -10,5 +10,6 @@ namespace TodoApp.Api.Interfaces
         Task<Todo?> UpdateTodoAsync(int id, UpdateTodoDto updateDto);
         Task<bool> DeleteTodoAsync(int id);
         Task<Todo?> ToggleCompletionAsync(int id);
+        Task<int> GetTotalCountAsync();
     }
 }
